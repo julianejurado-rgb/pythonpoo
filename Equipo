@@ -1,0 +1,20 @@
+class Equipo:
+    def __init__(self, codigo, tipo):
+        self.codigo = codigo
+        self.tipo = tipo
+        self.encendida = False
+
+    def encender(self):
+        self.encendida = True
+        print(f"Máquina {self.tipo} encendida y lista para usar.")
+
+    def montar_parte(self, vehiculo, parte):
+        if not self.encendida:
+            print("Error: la máquina no está encendida.")
+            return
+
+        print(f"\nInstalando '{parte.nombre}' (material: {parte.material}) en el vehículo...")
+        parte.colocar()
+        vehiculo.agregar_parte(parte)
+        vehiculo.cambiar_estado("Ensamblaje en proceso")
+        print("Pieza instalada correctamente.")
