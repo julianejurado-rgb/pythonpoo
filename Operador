@@ -1,0 +1,9 @@
+class Operador:
+    def __init__(self, nombre, identificacion, cargo):
+        self.nombre = nombre
+        self.identificacion = identificacion
+        self.cargo = cargo
+
+    def manejar_maquina(self, equipo):
+        print(f"\n{self.nombre} ({self.cargo}) está operando la máquina {equipo.tipo}.")
+        equipo.encender()
