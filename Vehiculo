@@ -1,0 +1,26 @@
+class Vehiculo:
+    def __init__(self, marca, modelo, anio):
+        self.marca = marca
+        self.modelo = modelo
+        self.anio = anio
+        self.estado = "Pendiente"
+        self.partes_instaladas = []  # [(nombre_pieza, material)]
+
+    def cambiar_estado(self, nuevo_estado):
+        self.estado = nuevo_estado
+
+    def agregar_parte(self, parte):
+        self.partes_instaladas.append((parte.nombre, parte.material))
+
+    def mostrar_datos(self):
+        print("\n--- Información del Vehículo ---")
+        print(f"Marca: {self.marca}")
+        print(f"Modelo: {self.modelo}")
+        print(f"Año: {self.anio}")
+        print(f"Estado actual: {self.estado}")
+        if self.partes_instaladas:
+            print("Piezas instaladas:")
+            for pieza, material in self.partes_instaladas:
+                print(f"  - {pieza} ({material})")
+        else:
+            print("Aún no se han instalado piezas.")
