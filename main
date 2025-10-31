@@ -1,0 +1,93 @@
+import random
+from vehiculo import Vehiculo
+from operador import Operador
+from equipo import Equipo
+from parte import Parte
+
+# ====== Datos base ======
+MARCAS = ["Mazda", "Renault", "Volkswagen", "Honda", "Subaru", "Fiat"]
+MODELOS = ["CX5", "Clio", "Jetta", "Civic", "Impreza", "Punto"]
+ANIOS = list(range(2017, 2026))
+
+NOMBRES = ["Andrés", "Valentina", "Laura", "Miguel", "Sebastián", "Sara"]
+APELLIDOS = ["Ramírez", "Ortiz", "López", "Mendoza", "Rojas", "Castro"]
+CARGOS = ["Técnico de Línea", "Ingeniero de Ensamblaje", "Supervisor de Producción", "Mecánico Robótico"]
+
+vehiculos_registrados = []
+
+# ====== Funciones ======
+def crear_vehiculo():
+    return Vehiculo(
+        random.choice(MARCAS),
+        random.choice(MODELOS),
+        random.choice(ANIOS)
+    )
+
+def crear_operador():
+    nombre = f"{random.choice(NOMBRES)} {random.choice(APELLIDOS)}"
+    identificacion = random.randint(1000, 9999)
+    cargo = random.choice(CARGOS)
+    return Operador(nombre, identificacion, cargo)
+
+def proceso_ensamblaje():
+    print("\nIniciando proceso de ensamblaje...")
+
+    vehiculo = crear_vehiculo()
+    operador = crear_operador()
+    equipo = Equipo(f"EQ-{random.randint(10, 99)}", "Brazo Mecánico")
+
+    vehiculo.mostrar_datos()
+    operador.manejar_maquina(equipo)
+
+    while True:
+        nombre_pieza = input("\nNombre de la pieza a instalar (o 'salir' para terminar): ").strip()
+        if nombre_pieza.lower() == "salir":
+            break
+
+        material_pieza = input("Material de la pieza: ").strip()
+        parte = Parte(nombre_pieza, material_pieza)
+        equipo.montar_parte(vehiculo, parte)
+
+    vehiculo.cambiar_estado("Ensamblado completo")
+    print(f"\nEnsamblaje completado por {operador.nombre}")
+    vehiculo.mostrar_datos()
+
+    vehiculos_registrados.append(vehiculo)
+
+def ver_vehiculos():
+    if not vehiculos_registrados:
+        print("\nNo hay vehículos ensamblados aún.")
+        return
+
+    print("\n=== VEHÍCULOS ENSAMBLADOS ===")
+    for i, v in enumerate(vehiculos_registrados, start=1):
+        print(f"\n#{i} - {v.marca} {v.modelo} ({v.anio}) | Estado: {v.estado}")
+        if v.partes_instaladas:
+            print("Piezas instaladas:")
+            for pieza, material in v.partes_instaladas:
+                print(f"   - {pieza} ({material})")
+        else:
+            print("   Sin piezas registradas.")
+
+# ====== Menú principal ======
+def main():
+    while True:
+        print("\n====== CENTRO DE ENSAMBLAJE ======")
+        print("1. Ensamblar nuevo vehículo")
+        print("2. Consultar vehículos ensamblados")
+        print("3. Salir")
+
+        opcion = input("Elige una opción: ").strip()
+
+        if opcion == "1":
+            proceso_ensamblaje()
+        elif opcion == "2":
+            ver_vehiculos()
+        elif opcion == "3":
+            print("\nCerrando el sistema de ensamblaje...")
+            break
+        else:
+            print("Opción no válida. Intenta nuevamente.")
+
+if __name__ == "__main__":
+    main()
