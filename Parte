@@ -1,0 +1,9 @@
+class Parte:
+    def __init__(self, nombre, material):
+        self.nombre = nombre
+        self.material = material
+        self.estado = "Sin instalar"
+
+    def colocar(self):
+        self.estado = "Instalada"
+        print(f"La pieza '{self.nombre}' fue marcada como {self.estado}.")
